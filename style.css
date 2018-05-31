@@ -23,6 +23,7 @@ a:hover {
 }
 main {
     width:800px;
+    max-width:100%;
     margin:auto;
 }
 ul.done {
