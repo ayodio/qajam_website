@@ -12,6 +12,7 @@ body {
 }
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Londrina Solid', cursive;
+    letter-spacing: 0.07em;
 }
 a {
     color:#cc6600;
