@@ -46,6 +46,10 @@ main {
     position: relative;
     display: inline-block;
     border-radius : 5px;
+    font-family: 'Londrina Solid', cursive;
+    font-weight: 300;
+    letter-spacing: 2px;
+    font-size: 1.2em;
 }
 .btn:hover {
     text-decoration: none;
