@@ -88,4 +88,7 @@ p.menu a{
     p.menu a{
         margin: 1em 0 0 0;
     }
+    p.menu a:first-child {
+        margin: 0 0 0 0;
+    }
 }
