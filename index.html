@@ -19,10 +19,67 @@
     <!-- font awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 </head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
 <body>
 <main>
     <h1>QAJAM</h1>
     <p>Adresse du serveur: qajam.ddns.net</p>
+    <canvas id="myChart" width="auto" height="100"></canvas>
+    <script>
+        function httpGet(theUrl)
+        {
+            var xmlHttp = null;
+
+            xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", theUrl, false );
+            xmlHttp.send( null );
+            return xmlHttp.responseText;
+        }
+
+        function csvToArray (csv) {
+            rows = csv.split("\n");
+
+            return rows.map(function (row) {
+                return row.split(";");
+            });
+        };
+
+        var csv = httpGet("temp.csv");
+        var labels = ["12:15"]
+
+
+        var data_array = csvToArray(csv);
+
+        var temp_serv = new Array()
+        var temp_web = new Array()
+        for (var i = data_array.length - 99; i < data_array.length; i++) {
+            labels.push(data_array[i][0].substr(11));
+            temp_serv.push(data_array[i][1]);
+            temp_web.push(data_array[i][2]);
+        }
+
+        labels.shift()
+
+        var ctx = document.getElementById("myChart").getContext('2d');
+
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels,
+                datasets: [{
+                    label: 'temp serveur minecraft',
+                    borderColor : "rgb(153, 77, 0)",
+                    backgroundColor : "rgba(255, 99, 132, 0)",
+                    data: temp_serv,
+                }, {
+                    label: 'temp serveur web',
+                    borderColor : "rgb(36, 50, 171 )",
+                    backgroundColor : "rgba(255, 99, 132, 0)",
+                    data: temp_web,
+                }]
+            },
+        });
+    </script>
     <p class="menu">
         <a href="/map" class="btn"><i class="fas fa-map"></i> Carte du serveur</a>
         <a href="latest.log" class="btn"><i class="fas fa-database"></i> Logs</a>
@@ -30,7 +87,7 @@
     <h2>TODO</h2>
     <ul>
         <li>convertir le style en scss</li>
-        <li>utiliser <a href="https://www.chartjs.org/">Chart.js</a> pour suivre la température des serveurs</li>
+        <li>refactor js et le mettre dans fichier séparé</li>
 	    <li>affficher l'heure de dernière génération de la map</li>
         <li>overclocker et installer un ventilateur</li>
         <li>acheter une <a href="http://amzn.eu/eJh4cbF">microSD plus performante</a></li>
@@ -48,6 +105,7 @@
     </ul>
     <h2>DONE</h2>
     <ul class="done">
+        <li>utiliser <a href="https://www.chartjs.org/">Chart.js</a> pour suivre la température des serveurs (06/06/2018)</li>
         <li>changer la timezone java (04/06/2018)</li>
         <li>Automatiser la génération de la map (03/06/2018)</li>
         <li>rendre les logs accessibles en ligne (03/06/2018)</li>
